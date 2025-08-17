@@ -68,3 +68,11 @@ omdb-api-filmes/
 └── README.md
 
 ```
+## 📸 Preview
+
+<p align="center">
+  <img src="./public/home.png" alt="Home Page" width="400"/>
+  <img src="./public/details.png" alt="Movie Details Page" width="400"/>
+  <img src="./public/favorites.png" alt="Movie Details Page" width="400"/>
+  <img src="./public/pagination.png" alt="Movie Details Page" width="400"/>
+</p>
