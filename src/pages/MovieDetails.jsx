@@ -1,10 +1,12 @@
 // src/pages/MovieDetails.jsx
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { useFavorites } from '../context/FavoritesContext';
 
 export const MovieDetails = () => {
     const { id } = useParams();
     const navigate = useNavigate();
+    const { isFavorite, toggleFavorite } = useFavorites();
     const [movie, setMovie] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
@@ -134,10 +136,14 @@ export const MovieDetails = () => {
                                 </div>
 
                                 <button
-                                    className="px-6 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors"
-                                    onClick={() => console.log('Adicionar aos favoritos:', movie.imdbID)}
+                                    className={`px-6 py-2 rounded-lg transition-colors font-semibold ${
+                                        isFavorite(movie.imdbID)
+                                            ? 'bg-red-100 text-red-700 hover:bg-red-200'
+                                            : 'bg-red-500 text-white hover:bg-red-600'
+                                    }`}
+                                    onClick={() => toggleFavorite(movie)}
                                 >
-                                    ❤️ Adicionar aos Favoritos
+                                    {isFavorite(movie.imdbID) ? '💔 Remover dos Favoritos' : '❤️ Adicionar aos Favoritos'}
                                 </button>
                             </div>
                         )}
