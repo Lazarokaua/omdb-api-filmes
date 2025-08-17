@@ -11,18 +11,24 @@ export const FavoritesProvider = ({ children }) => {
         const savedFavorites = localStorage.getItem('movieFavorites');
         if (savedFavorites) {
             try {
-                setFavorites(JSON.parse(savedFavorites));
+                const parsedFavorites = JSON.parse(savedFavorites);
+                setFavorites(parsedFavorites);
             } catch (error) {
                 console.error('Erro ao carregar favoritos:', error);
                 setFavorites([]);
             }
         }
+        setIsInitialized(true); // Marca como inicializado após carregar
     }, []);
 
-    // Salvar no localStorage sempre que favorites muda
+    // Salvar no localStorage sempre que favorites muda (mas não na primeira renderização)
+    const [isInitialized, setIsInitialized] = useState(false);
+
     useEffect(() => {
-        localStorage.setItem('movieFavorites', JSON.stringify(favorites));
-    }, [favorites]);
+        if (isInitialized) {
+            localStorage.setItem('movieFavorites', JSON.stringify(favorites));
+        }
+    }, [favorites, isInitialized]);
 
     const addToFavorites = (movie) => {
         setFavorites(prev => {
